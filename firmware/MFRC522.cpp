@@ -1169,33 +1169,7 @@ void MFRC522::PICC_DumpToSerial(Uid *uid	///< Pointer to Uid struct returned fro
 	Serial.println(PICC_GetTypeName(piccType));
 	
 	// Dump contents
-	switch (piccType) {
-		case PICC_TYPE_MIFARE_MINI:
-		case PICC_TYPE_MIFARE_1K:
-		case PICC_TYPE_MIFARE_4K:
-			// All keys are set to FFFFFFFFFFFFh at chip delivery from the factory.
-			for (byte i = 0; i < 6; i++) {
-				key.keyByte[i] = 0xFF;
-			}
-			PICC_DumpMifareClassicToSerial(uid, piccType, &key);
-			break;
-			
-		case PICC_TYPE_MIFARE_UL:
-			PICC_DumpMifareUltralightToSerial();
-			break;
-			
-		case PICC_TYPE_ISO_14443_4:	
-		case PICC_TYPE_ISO_18092:
-		case PICC_TYPE_MIFARE_PLUS:
-		case PICC_TYPE_TNP3XXX:
-			Serial.println("Dumping memory contents not implemented for that PICC type.");
-			break;
-			
-		case PICC_TYPE_UNKNOWN:
-		case PICC_TYPE_NOT_COMPLETE:
-		default:
-			break; // No memory dump here
-	}
+	
 
 	Serial.println();
 	PICC_HaltA(); // Already done if it was a MIFARE Classic PICC.
